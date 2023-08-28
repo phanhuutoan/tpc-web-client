@@ -1,0 +1,340 @@
+$bg-color: rgba(
+  $color: #000000,
+  $alpha: 0.7,
+);
+
+#app {
+  position: relative;
+}
+
+@mixin responsive($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+.img_hover {
+  width: 5.9rem;
+  height: 5.9rem;
+  opacity: 0;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.hero {
+  position: relative;
+  &__video-container {
+    height: 100vh;
+    // width: 100vh;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  &__video {
+    width: 100vw;
+    object-fit: cover;
+    height: 100vh;
+  }
+
+  &__video-trans {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+
+    video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+  }
+}
+
+.title {
+  padding: 1rem;
+  max-width: 30rem;
+  position: absolute;
+  top: 6rem;
+  left: 3rem;
+  @include responsive(1500px) {
+    top: 3rem;
+    left: 5rem;
+  }
+  h1 {
+    font-size: 3.5rem;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+}
+
+.houses {
+  color: white;
+  position: relative;
+  display: flex;
+
+  &__draw {
+    padding: 0.6rem;
+    border: 1px solid #000000;
+    border-radius: 0.5rem;
+    background-color: $bg-color;
+    margin-left: 1.2rem;
+    position: relative;
+    img {
+      width: 6.5rem;
+      cursor: pointer;
+    }
+  }
+
+  &__draw-hover {
+    position: absolute;
+
+    &:nth-child(2) {
+      @extend .img_hover;
+      top: 13px;
+      left: 22px;
+    }
+    &:nth-child(3) {
+      @extend .img_hover;
+      top: 108px;
+      left: 22px;
+    }
+    &:nth-child(4) {
+      @extend .img_hover;
+      top: 184px;
+      left: 22px;
+    }
+
+    &:nth-child(5) {
+      @extend .img_hover;
+      top: 249px;
+      left: 22px;
+    }
+    &:nth-child(6) {
+      @extend .img_hover;
+      bottom: 56px;
+      left: 22px;
+    }
+    &:nth-child(7) {
+      @extend .img_hover;
+      bottom: 5px;
+      left: 22px;
+    }
+  }
+
+  &__item {
+    display: flex;
+    padding: 1rem 1.5rem;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    align-items: center;
+    background-color: $bg-color;
+    cursor: pointer;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    &:hover {
+      background-color: rgb(238, 238, 238) !important;
+      color: #000000;
+    }
+  }
+
+  &__item-section {
+    &:not(:last-child) {
+      margin-right: 1.8rem;
+    }
+
+    p {
+      margin-bottom: 0.3rem;
+      font-size: 0.6rem;
+    }
+  }
+}
+
+.house {
+  &__details {
+    width: 30rem;
+    color: white;
+    position: absolute;
+    top: 13rem;
+    left: 8rem;
+
+    @include responsive(1500px) {
+      top: 5rem;
+      left: 5rem;
+    }
+  }
+
+  &__detail-left {
+    margin-bottom: 0.5rem;
+    .houses__item-section {
+      &:not(:first-child) {
+        p {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  &__square {
+    padding: 1.2rem;
+    background-color: $bg-color;
+    border-radius: 0.5rem;
+  }
+
+  &__square-container {
+    display: flex;
+    border-bottom: 1px solid rgba($color: white, $alpha: 0.5);
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  &__sqLeft {
+    margin-right: 1.9rem;
+
+    .houses__item-section {
+      p {
+        margin-bottom: 0.7rem;
+      }
+      h4 {
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  &__sqRight {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1.2rem;
+  }
+
+  &__doc {
+    display: flex;
+    justify-content: space-between;
+
+    &-left {
+      h4 {
+        font-size: 0.8rem;
+        margin-bottom: 0.6rem;
+      }
+    }
+  }
+  &__cta {
+    padding: 0.8rem 2.5rem;
+    background-color: white;
+    color: #000000;
+    text-transform: uppercase;
+    border-radius: 200px;
+    cursor: pointer;
+    border: none;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+    &-back-btn {
+      height: 2.5rem;
+      width: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: 50%;
+      margin-right: 0.7rem;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    img {
+      height: 1rem;
+      width: 1rem;
+    }
+    h3 {
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+  }
+}
+
+#house-nav {
+  color: white;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+
+  transform: translateX(-50%);
+  @include responsive(1500px) {
+    left: 47%;
+  }
+}
+
+.house-nav {
+  &__ext {
+    margin-right: 2rem;
+  }
+  &__img {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+
+    &--focus {
+      border: 2px solid white;
+    }
+
+    &:not(:last-child) {
+      margin-right: 0.9rem;
+    }
+  }
+
+  &__ext--heading {
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.7rem;
+    border-bottom: 2px solid white;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  &__left,
+  &__right {
+    height: 2.2rem;
+    width: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-color;
+    border-radius: 50%;
+    border: 1px solid white;
+    margin-top: 0.5rem;
+    margin: 0 1rem;
+    cursor: pointer;
+
+    img {
+      height: 0.7rem;
+      width: 0.7rem;
+    }
+  }
+}
+
+.v-divider {
+  border-right: 1px solid rgba($color: white, $alpha: 0.7);
+  height: 2.5rem;
+  padding-right: 1.8rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+}

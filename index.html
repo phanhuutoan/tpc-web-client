@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test doc</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <section class="hero">
+        <div class="hero__video-container">
+          <video
+            class="hero__video"
+            :src="stableVideo"
+            autoplay
+            preload="auto"
+            loop
+          ></video>
+
+          <div class="hero__video-trans">
+            <video
+              v-if="!!videoTrans"
+              :src="videoTrans"
+              autoplay
+              preload="auto"
+              :loop="isLoop"
+            ></video>
+          </div>
+
+        </div>
+      </section>
+      <section 
+        id="house-list" 
+        class="title"
+        v-if="currentPanel === 'list'">
+        <h1>Select your house</h1>
+        <div class="houses">
+          <div class="houses__group">
+            <div 
+              v-for="h in houses" 
+              class="houses__item"
+              @click="changeDetail(h.name)">
+              <div class="houses__item-section">
+                <p>HOUSE</p>
+                <h4>{{h.name}}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>PLOT, M2</p>
+                <h4>{{h.plotSq}}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>HOUSE, M2</p>
+                <h4>{{h.houseSq}}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>PRICE, EUR</p>
+                <h4>{{h.price}}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="houses__draw">
+            <img src="images/houseBase.png" alt="">
+            <img 
+              class="houses__draw-hover" 
+              v-for="h in houseDraws"
+              :src="`images/${h.draw}.svg`" 
+              @click="changeDetail(h.name)"
+              alt="">
+          </div>
+        </div>
+      </section>
+
+      <section 
+        id="house-detail" 
+        class="house__details"
+        v-if="currentPanel === 'detail'">
+        <div class="house__title" @click="goBack()">
+          <div class="house__title-back-btn" >
+            <img src="svg/left-arrow.svg" alt="back-arrow" />
+          </div>
+          <h3>To house list</h3>
+        </div>
+        <div class="house__detail-left">
+          <div class="houses__item">
+            <div class="houses__item-section v-divider">
+              <h4>{{houseDetail.name}}</h4>
+            </div>
+            <div class="houses__item-section">
+              <p>PLOT, M2</p>
+              <h4>{{houseDetail.plotSq}}</h4>
+            </div>
+            <div class="houses__item-section">
+              <p>HOUSE, M2</p>
+              <h4>{{houseDetail.houseSq}}</h4>
+            </div>
+            <div class="houses__item-section">
+              <p>PRICE, EUR</p>
+              <h4>{{houseDetail.price}}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="house__square">
+          <div class="house__square-container">
+            <div class="house__sqLeft">
+              <div class="houses__item-section">
+                <p>DATE</p>
+                <h4>Q3/2023</h4>
+              </div>
+            </div>
+            <div class="house__sqRight">
+              <div class="houses__item-section">
+                <p>KITCHEN</p>
+                <h4>{{ houseDetail.kitchen }}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>GARAGE</p>
+                <h4>{{ houseDetail.garage }}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>LIVING ROOM</p>
+                <h4>{{ houseDetail.livingRoom }}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>BEDROOM 1</p>
+                <h4>{{ houseDetail.bedRoom1 }}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>BEDROOM 2</p>
+                <h4>{{ houseDetail.bedRoom2 }}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>BEDROOM 3</p>
+                <h4>{{ houseDetail.bedRoom3 }}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>WARDROBE</p>
+                <h4>{{ houseDetail.wardrobe }}</h4>
+              </div>
+              <div class="houses__item-section">
+                <p>CABINET</p>
+                <h4>{{ houseDetail.cabinet }}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="house__doc">
+            <div class="house__doc-left">
+              <h4>house document</h4>
+              <h3>House_document.PDF</h3>
+            </div>
+            <div class="house__doc-right">
+              <button class="house__cta">Book a call</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="house-nav" v-if="currentPanel === 'detail'">
+        <div class="house-nav__left" @click="goLeft()">
+          <img src="svg/small_left.svg" alt="arrow">
+        </div>
+        <div class="house-nav__ext">
+          <div class="house-nav__ext--heading">
+            <h4>Exterior</h4>
+          </div>
+          <div class="house-nav__ext--images">
+            <img 
+              v-for="(img, index) in listExtImages" 
+              :src="img"
+              @click="nextVideo(index + 1, 'ext')"
+              alt="image-nav" 
+              class="house-nav__img"
+              :class="{'house-nav__img--focus': index + 1 === currentVideoId && videoSide === 'ext'}"/>
+          </div>
+        </div>
+        <div class="house-nav__int">
+          <div class="house-nav__ext--heading">
+            <h4>Interior</h4>
+          </div>
+          <div class="house-nav__ext--images">
+            <img 
+              v-for="(img, index) in listIntImages" 
+              @click="nextVideo(index + 1, 'int')"
+              :src="img" 
+              alt="image-nav"
+              class="house-nav__img"
+              :class="{'house-nav__img--focus': index + 1 === currentVideoId && videoSide === 'int'}" />
+          </div>
+        </div>
+        <div class="house-nav__right" @click="goRight()">
+          <img src="svg/small_right.svg" alt="arrow">
+        </div>
+      </section>
+    </div>
+  </body>
+  <script src="./data.js" type="module"></script>
+  <script src="./app.js" type="module"></script>
+</html>
